@@ -21,3 +21,13 @@
       }
     }
 
+## Caveats
+
+By default the module will purge any settings that are not managed by Puppet.
+While not advised you can disable this feature:
+
+    node /box/ {
+      class { 'ulimit':
+        purge => false,
+    }
+

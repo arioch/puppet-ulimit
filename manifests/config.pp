@@ -9,7 +9,7 @@ class ulimit::config {
   file { $::ulimit::config_dir:
     ensure  => directory,
     recurse => true,
-    purge   => true;
+    purge   => $::ulimit::purge,
   }
 }
 
