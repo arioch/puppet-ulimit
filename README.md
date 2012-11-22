@@ -12,12 +12,19 @@
     node /box/ {
       include ulimit
 
-      ulimit::rule { 'foo1':
-        ensure        => present,
-        ulimit_domain => 'domain',
-        ulimit_type   => 'type',
-        ulimit_item   => 'item',
-        ulimit_value  => 'value',
+      ulimit::rule {
+        'example1':
+          ulimit_domain => '*',
+          ulimit_type   => 'soft',
+          ulimit_item   => 'nofile',
+          ulimit_value  => '1024';
+
+        'example2':
+          ensure        => absent,
+          ulimit_domain => '*',
+          ulimit_type   => 'hard',
+          ulimit_item   => 'nofile',
+          ulimit_value  => '50000';
       }
     }
 
@@ -29,5 +36,6 @@ While not advised you can disable this feature:
     node /box/ {
       class { 'ulimit':
         purge => false,
+      }
     }
 
