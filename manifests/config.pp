@@ -1,11 +1,15 @@
 # Class: ulimit::config
 #
-#
 class ulimit::config {
-  file {
-    $ulimit::params::ulimit_confdir:
-      ensure  => directory,
-      recurse => true,
-      purge   => true;
+  File {
+    group => $::ulimit::config_group,
+    owner => $::ulimit::config_user,
+  }
+
+  file { $::ulimit::config_dir:
+    ensure  => directory,
+    recurse => true,
+    purge   => true;
   }
 }
+

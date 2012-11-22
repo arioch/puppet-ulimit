@@ -1,7 +1,8 @@
 # Class: ulimit::params
 #
-#
 class ulimit::params {
-  $ulimit_name    = 'ulimit'
-  $ulimit_confdir = '/etc/security/limits.d'
+  $config_dir   = '/etc/security/limits.d'
+  $config_group = 'root'
+  $config_user  = 'root'
 }
+
