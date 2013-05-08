@@ -1,4 +1,4 @@
-# Class: ulimit::params
+# = Class: ulimit::params
 #
 class ulimit::params {
   $config_dir   = '/etc/security/limits.d'

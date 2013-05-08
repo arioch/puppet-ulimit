@@ -1,4 +1,4 @@
-# Class: ulimit
+# = Class: ulimit
 #
 class ulimit (
   $config_dir   = $ulimit::params::config_dir,
@@ -6,8 +6,6 @@ class ulimit (
   $config_user  = $ulimit::params::config_user,
   $purge        = $ulimit::params::purge
 ) inherits ulimit::params {
-
   include ulimit::config
-
 }
 

@@ -1,4 +1,4 @@
-# Class: ulimit::config
+# = Class: ulimit::config
 #
 class ulimit::config {
   File {
