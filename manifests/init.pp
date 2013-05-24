@@ -1,4 +1,4 @@
-# = Class: ulimit
+# == Class: ulimit
 #
 class ulimit (
   $config_dir   = $ulimit::params::config_dir,
