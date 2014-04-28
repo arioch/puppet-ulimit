@@ -47,7 +47,7 @@
 #
 define ulimit::rule (
   $ulimit_domain,
-  $ulimit_type,
+  $ulimit_type = $::ulimit::ulimit_type,
   $ulimit_item,
   $ulimit_value,
   $ensure = present,
