@@ -5,5 +5,6 @@ class ulimit::params {
   $config_group = 'root'
   $config_user  = 'root'
   $purge        = true
+  $ulimit_type  = '-'
 }
 
