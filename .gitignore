@@ -1,3 +1,29 @@
+# OS X
 *.swp
 .DS_Store
 pkg
+
+# Default ignores for emacs editor
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+# Default ignores for vim editor
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# vagrant
+.vagrant
+
+# spec
+spec/fixtures
+
+# bundler
+vendor/bundle
+.bundle
