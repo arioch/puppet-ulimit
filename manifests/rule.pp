@@ -71,7 +71,7 @@ define ulimit::rule (
 
     'absent': {
       file {
-        "${::ulimit::config_dir}/${name}.conf":
+        "${::ulimit::config_dir}/${priority}_${name}.conf":
           ensure => $ensure;
       }
     }
