@@ -43,6 +43,8 @@
 #
 # $ulimit_value::   Numerical value
 #
+# $priority::       Default: 80
+#
 # $ensure::         Default: present
 #
 define ulimit::rule (
@@ -50,6 +52,7 @@ define ulimit::rule (
   $ulimit_type,
   $ulimit_item,
   $ulimit_value,
+  $priority = 80,
   $ensure = present,
 ) {
   File {
@@ -60,7 +63,7 @@ define ulimit::rule (
   case $ensure {
     'present': {
       file {
-        "${::ulimit::config_dir}/${name}.conf":
+        "${::ulimit::config_dir}/${priority}_${name}.conf":
           ensure  => $ensure,
           content => template ('ulimit/rule.conf.erb');
       }
@@ -68,7 +71,7 @@ define ulimit::rule (
 
     'absent': {
       file {
-        "${::ulimit::config_dir}/${name}":
+        "${::ulimit::config_dir}/${name}.conf":
           ensure => $ensure;
       }
     }

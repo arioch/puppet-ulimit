@@ -11,5 +11,10 @@ class ulimit::config {
     recurse => true,
     purge   => $::ulimit::purge,
   }
+
+  if $ulimit::use_default_ulimits {
+    create_resources('ulimit::rule',$ulimit::default_ulimits)
+  }
+
 }
 

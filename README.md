@@ -6,6 +6,9 @@
 
 * Debian 5 (Lenny)
 * Debian 6 (Squeeze)
+* CentOS 5
+* CentOS 6
+* CentOS 7
 
 ## Example usage
 
