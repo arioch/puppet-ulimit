@@ -1,4 +1,7 @@
-# <domain> <type> <item> <value>
-#
+<%- if @ulimit_comment -%>
+<%= @ulimit_comment %>
+<%- end -%>
 
-<%= @ulimit_domain %>		<%= @ulimit_type %>		<%= @ulimit_item %>		<%= @ulimit_value %>
+<% @ulimit_domain.each_with_index do | this_domain,idx | -%>
+<%= @ulimit_domain[idx] %>	<%= @ulimit_type[idx] %>	<%= @ulimit_item[idx] %>	<%= @ulimit_value[idx] %>
+<% end -%>

@@ -2,6 +2,9 @@
 #
 # === Parameters:
 #
+# $ulimit_comment:: String
+#                   <String> is an array of one or more lines of text that preceed the ulimit value.
+#
 # $ulimit_domain::  Domain
 #                   <domain> can be:
 #                     - an user name
@@ -48,6 +51,7 @@
 # $ensure::         Default: present
 #
 define ulimit::rule (
+  $ulimit_comment = undef,
   $ulimit_domain,
   $ulimit_type,
   $ulimit_item,
@@ -63,7 +67,7 @@ define ulimit::rule (
   case $ensure {
     'present': {
       file {
-        "${::ulimit::config_dir}/${priority}_${name}.conf":
+        "${::ulimit::config_dir}/${priority}-${name}.conf":
           ensure  => $ensure,
           content => template ('ulimit/rule.conf.erb');
       }
@@ -71,7 +75,7 @@ define ulimit::rule (
 
     'absent': {
       file {
-        "${::ulimit::config_dir}/${priority}_${name}.conf":
+        "${::ulimit::config_dir}/${priority}-{name}.conf":
           ensure => $ensure;
       }
     }

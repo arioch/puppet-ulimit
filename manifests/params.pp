@@ -19,36 +19,30 @@ class ulimit::params {
       } elsif $::operatingsystemmajrelease == 6  {
         # pam package on EL6 creates 90-nproc.conf
         $default_ulimits = {
-          'nproc_user_defaults' => {
-            'ulimit_domain'     => '*',
-            'ulimit_type'       => 'soft',
-            'ulimit_item'       => 'nproc',
-            'ulimit_value'      => '1024',
+          'nproc' => {
+            'ulimit_comment'	  => "# Default limit for number of user's processes to prevent\n# accidental fork bombs.\n# See rhbz #432903 for reasoning.",
+            'ulimit_domain'     => [ '*', 'root', ],
+            'ulimit_type'       => [ 'soft', 'soft', ],
+            'ulimit_item'       => [ 'nproc', 'nproc', ],
+            'ulimit_value'      => [ '1024', 'unlimited' ],
             'priority'          => '90',
           },
-          'nproc_root_defaults' => {
-            'ulimit_domain'     => 'root',
-            'ulimit_type'       => 'soft',
-            'ulimit_item'       => 'nproc',
-            'ulimit_value'      => 'unlimited',
-            'priority'          => '90',
-          }
         }
       } elsif $::operatingsystemmajrelease == 7 {
         # pam package on EL7 creates 20-nproc.conf
         $default_ulimits = {
           'nproc_user_defaults' => {
-            'ulimit_domain'     => '*',
-            'ulimit_type'       => 'soft',
-            'ulimit_item'       => 'nproc',
-            'ulimit_value'      => '4096',
+            'ulimit_domain'     => [ '*', ],
+            'ulimit_type'       => [ 'soft', ],
+            'ulimit_item'       => [ 'nproc', ],
+            'ulimit_value'      => [ '4096', ],
             'priority'          => '20',
           },
           'nproc_root_defaults' => {
-            'ulimit_domain'     => 'root',
-            'ulimit_type'       => 'soft',
-            'ulimit_item'       => 'nproc',
-            'ulimit_value'      => 'unlimited',
+            'ulimit_domain'     => [ 'root', ],
+            'ulimit_type'       => [ 'soft', ],
+            'ulimit_item'       => [ 'nproc', ],
+            'ulimit_value'      => [ 'unlimited', ],
             'priority'          => '20',
           }
         }
