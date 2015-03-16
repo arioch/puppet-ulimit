@@ -55,6 +55,8 @@ define ulimit::rule (
   $priority = 80,
   $ensure = present,
 ) {
+  require ::ulimit
+
   File {
     group => $::ulimit::config_group,
     owner => $::ulimit::config_user,
