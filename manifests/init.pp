@@ -13,8 +13,8 @@ class ulimit (
   $config_user         = $ulimit::params::config_user,
   $use_default_ulimits = $ulimit::params::use_default_ulimits,
   $purge               = $ulimit::params::purge,
-) inherits ulimit::params {
+) inherits ::ulimit::params {
   $default_ulimits = $ulimit::params::default_ulimits
-  include ulimit::config
+  include ::ulimit::config
 }
 
