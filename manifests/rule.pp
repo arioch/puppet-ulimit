@@ -49,13 +49,17 @@
 #
 define ulimit::rule (
   $ulimit_domain,
-  $ulimit_type,
-  $ulimit_item,
-  $ulimit_value,
+  $ulimit_type = [],
+  $ulimit_item = [],
+  $ulimit_value = [],
   $priority = 80,
   $ensure = present,
 ) {
   require ::ulimit
+  
+  if (size($ulimit_type) != size($ulimit_item)) or (size($ulimit_item) != size($ulimit_value)) { 
+    fail("Array's are not the same size")
+  }
 
   File {
     group => $::ulimit::config_group,

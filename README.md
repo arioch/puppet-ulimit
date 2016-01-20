@@ -18,16 +18,22 @@
       ulimit::rule {
         'example1':
           ulimit_domain => '*',
-          ulimit_type   => 'soft',
-          ulimit_item   => 'nofile',
-          ulimit_value  => '1024';
+          ulimit_type   => ['soft'],
+          ulimit_item   => ['nofile'],
+          ulimit_value  => ['1024'];
 
         'example2':
           ensure        => absent,
           ulimit_domain => '*',
-          ulimit_type   => 'hard',
-          ulimit_item   => 'nofile',
-          ulimit_value  => '50000';
+          ulimit_type   => ['hard'],
+          ulimit_item   => ['nofile'],
+          ulimit_value  => ['50000'];
+
+        'example3':
+          ulimit_domain => '*',
+          ulimit_type   => ['soft', 'soft'],
+          ulimit_item   => ['nofile', 'nproc''],
+          ulimit_value  => ['1024', 'unlimited'];
       }
     }
 

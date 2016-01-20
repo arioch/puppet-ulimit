@@ -22,16 +22,16 @@ class ulimit::params {
           'nproc_user_defaults' => {
             'priority'          => '90',
             'ulimit_domain'     => '*',
-            'ulimit_item'       => 'nproc',
-            'ulimit_type'       => 'soft',
-            'ulimit_value'      => '1024',
+            'ulimit_item'       => ['nproc'],
+            'ulimit_type'       => ['soft'],
+            'ulimit_value'      => ['1024'],
           },
           'nproc_root_defaults' => {
             'priority'          => '90',
             'ulimit_domain'     => 'root',
-            'ulimit_item'       => 'nproc',
-            'ulimit_type'       => 'soft',
-            'ulimit_value'      => 'unlimited',
+            'ulimit_item'       => ['nproc'],
+            'ulimit_type'       => ['soft'],
+            'ulimit_value'      => ['unlimited'],
           },
         }
       } elsif $::operatingsystemmajrelease == '7' {
@@ -40,16 +40,16 @@ class ulimit::params {
           'nproc_user_defaults' => {
             'priority'          => '20',
             'ulimit_domain'     => '*',
-            'ulimit_item'       => 'nproc',
-            'ulimit_type'       => 'soft',
-            'ulimit_value'      => '4096',
+            'ulimit_item'       => ['nproc'],
+            'ulimit_type'       => ['soft'],
+            'ulimit_value'      => ['4096'],
           },
           'nproc_root_defaults' => {
             'priority'          => '20',
-            'ulimit_domain'     => 'root',
-            'ulimit_item'       => 'nproc',
-            'ulimit_type'       => 'soft',
-            'ulimit_value'      => 'unlimited',
+            'ulimit_domain'     => ['root'],
+            'ulimit_item'       => ['nproc'],
+            'ulimit_type'       => ['soft'],
+            'ulimit_value'      => ['unlimited'],
           },
         }
       } else {
