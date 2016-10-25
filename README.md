@@ -17,17 +17,21 @@
 
       ulimit::rule {
         'example1':
-          ulimit_domain => '*',
-          ulimit_type   => 'soft',
-          ulimit_item   => 'nofile',
-          ulimit_value  => '1024';
-
+          ulimit_domain => ['*'],
+          ulimit_type   => ['soft'],
+          ulimit_item   => ['nofile'],
+          ulimit_value  => ['1024'];
         'example2':
-          ensure        => absent,
-          ulimit_domain => '*',
-          ulimit_type   => 'hard',
-          ulimit_item   => 'nofile',
-          ulimit_value  => '50000';
+          ensure => absent,
+          ulimit_domain => ['*'],
+          ulimit_type   => ['soft'],
+          ulimit_item   => ['nofile'],
+          ulimit_value  => ['1024'];
+        'example3':
+          ulimit_domain => ['*', '*', '*'],
+          ulimit_type   => ['soft', 'hard', 'soft'],
+          ulimit_item   => ['nofile', 'nofile', 'stack'],
+          ulimit_value  => ['1024', '32768', '65536'],
       }
     }
 
@@ -41,4 +45,6 @@ While not advised you can disable this feature:
         purge => false,
       }
     }
+
+Domain, type, item and value parameters must be arrays -- even if there is only one value.
 
