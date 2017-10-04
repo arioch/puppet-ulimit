@@ -15,10 +15,14 @@
 # * http://www.stuartellis.eu/articles/rake/
 ##############################################################################
 require 'falkorlib'
+require 'puppetlabs_spec_helper/rake_tasks'
 
 ## placeholder for custom configuration of FalkorLib.config.*
 ## See https://github.com/Falkor/falkorlib
 
+FalkorLib.config.versioning do |c|
+  c[:type] = 'puppet_module'
+end
 
 # Git flow customization
 FalkorLib.config.gitflow do |c|
