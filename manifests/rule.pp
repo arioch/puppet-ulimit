@@ -56,8 +56,7 @@ define ulimit::rule (
   $ensure = present,
 ) {
   require ::ulimit
-  
-  if (size($ulimit_type) != size($ulimit_item)) or (size($ulimit_item) != size($ulimit_value)) { 
+  if (size($ulimit_type) != size($ulimit_item)) or (size($ulimit_item) != size($ulimit_value)) {
     fail("Array's are not the same size")
   }
 
@@ -87,4 +86,3 @@ define ulimit::rule (
     }
   }
 }
-
