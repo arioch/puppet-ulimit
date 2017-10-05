@@ -52,84 +52,95 @@ In particular, this module depends on
 
 See also [`tests/rule.pp`](https://github.com/Falkor/puppet-ulimit/blob/master/tests/rule.pp)
 
+---------------
 ```ruby
-  include ::ulimit
+include ::ulimit
 
-  # This will create the file '/etc/security/limits.d/80_example1.conf' with the
-  # following content:
-  #
-  # *       soft         nofile      1024
-  #
-  ::ulimit::rule{ 'example1':
-      ulimit_domain => '*',
-      ulimit_type   => 'soft',
-      ulimit_item   => 'nofile',
-      ulimit_value  => '1024',
-  }
+::ulimit::rule{ 'example1':
+  ulimit_domain => '*',
+  ulimit_type   => 'soft',
+  ulimit_item   => 'nofile',
+  ulimit_value  => '1024',
+}
+```
 
-  # This will create the file '/etc/security/limits.d/80_example2.conf' with the
-  # following content:
-  #
-  # *       hard         nproc        1024
-  # *       hard         nofile       1024
-  #
-  ::ulimit::rule{ 'example2':
-    ensure        => 'present,
-    ulimit_domain => '*',
-    ulimit_type   => 'hard',
-    ulimit_item   => [ 'nproc', 'nofile' ],
-    ulimit_value  => '1024',
-  }
+This will create the file `/etc/security/limits.d/80_example1.conf` with the following content:
 
-  # This will create the file '/etc/security/limits.d/80_slurm.conf' with the
-  # following content:
-  #
-  # [...]
-  # *       soft         memlock      unlimited
-  # *       soft         stack        unlimited
-  # *       hard         memlock      unlimited
-  # *       hard         stack        unlimited
-  #
-  ::ulimit::rule{ 'slurm':
-      ensure        => 'present',
-      ulimit_domain => '*',
-      ulimit_type   => [ 'soft', 'hard' ],
-      ulimit_item   => [ 'memlock', 'stack' ],
-      ulimit_value  => 'unlimited',
-  }
+      *       soft         nofile      1024
 
-  # Below statement should create '/etc/security/limits.d/50_slurm-nproc.conf'
-  # with the following content:
-  #
-  # *       soft         nproc        10240
-  # *       hard         nproc        10240
-  #
-  ::ulimit::rule{ 'slurm-nproc':
-      ensure        => 'present',
-      priority      => 50,
-      ulimit_domain => '*',
-      ulimit_type   => [ 'soft', 'hard' ],
-      ulimit_item   => 'nproc',
-      ulimit_value  => '10240',
-  }
+-------------
+```ruby
+include ::ulimit
 
-  # You can also pass the content yourself -- below statement will create
-  # '/etc/security/limits.d/60_content.conf' with that content
-  #
-  ::ulimit::rule{ 'content':
-      ensure   => 'present',
-      priority => 60,
-      content  => template('ulimit/test.erb'),
-  }
+::ulimit::rule{ 'example2':
+  ulimit_domain => '*',
+  ulimit_type   => 'soft',
+  ulimit_item   => 'nofile',
+  ulimit_value  => '1024',
+}
+```
 
-  # ... or pass directly the source file -- below statement will create
-  # '/etc/security/limits.d/70_source.conf' with that content
-  #
-  ::ulimit::rule{ 'source':
-      ensure   => 'present',
-      priority => 70,
-      source   => 'puppet:///modules/ulimit/test.conf',
-  }
+This will create the file `/etc/security/limits.d/80_example2.conf` with the following content:
+
+        *       hard         nproc        1024
+        *       hard         nofile       1024
+
+---------------
+```ruby
+::ulimit::rule{ 'slurm':
+   ensure        => 'present',
+   ulimit_domain => '*',
+   ulimit_type   => [ 'soft', 'hard' ],
+   ulimit_item   => [ 'memlock', 'stack' ],
+   ulimit_value  => 'unlimited',
+}
+```
+
+ This will create the file `/etc/security/limits.d/80_slurm.conf` with the
+ following content:
+
+       *       soft         memlock      unlimited
+       *       soft         stack        unlimited
+       *       hard         memlock      unlimited
+       *       hard         stack        unlimited
+
+
+----------------
+```ruby
+::ulimit::rule{ 'slurm-nproc':
+   ensure        => 'present',
+   priority      => 50,
+   ulimit_domain => '*',
+   ulimit_type   => [ 'soft', 'hard' ],
+   ulimit_item   => 'nproc',
+   ulimit_value  => '10240',
+}
+```
+
+This statement should create `/etc/security/limits.d/50_slurm-nproc.conf` with the following content:
+
+        *       soft         nproc        10240
+        *       hard         nproc        10240
+
+---------------
+You can also pass the content yourself -- below statement will create  `/etc/security/limits.d/60_content.conf` with that content
+
+```ruby
+::ulimit::rule{ 'content':
+   ensure   => 'present',
+   priority => 60,
+   content  => template('ulimit/test.erb'),
+}
+```
+
+... or pass directly the source file -- below statement will create `/etc/security/limits.d/70_source.conf` with that content:
+
+```ruby
+::ulimit::rule{ 'source':
+   ensure   => 'present',
+   priority => 70,
+   source   => 'puppet:///modules/ulimit/test.conf',
+}
 ```
 
 
