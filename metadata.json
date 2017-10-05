@@ -1,5 +1,5 @@
 {
-  "name": "falkor-ulimit",
+  "name": "svarrette-ulimit",
   "version": "0.1.0",
   "author": "Tom De Vylder, Sebastien Varrette",
   "summary": "Puppet Ulimit module, fork from arioch/puppet-ulimit to allow a version release compliant with Puppet 4 the time Tom release the official new version on his slide",
