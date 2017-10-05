@@ -1,5 +1,5 @@
 ################################################################################
-# Time-stamp: <Thu 2017-10-05 12:08 svarrette>
+# Time-stamp: <Thu 2017-10-05 14:45 svarrette>
 #
 # File::      <tt>rule.pp</tt>
 # Author::    Tom De Vylder, Sebastien Varrette
@@ -15,9 +15,22 @@
 #
 # @param ensure [String] Default: 'present'.
 #          Ensure the presence (or absence) of the ulimit rule
+# @param content [String]
+#          The desired contents of a file, as a string. This attribute is
+#          mutually exclusive with source and target.
+#          See also
+#          https://docs.puppet.com/puppet/latest/types/file.html#file-attribute-content
 # @param priority      [Integer] Default: 80
 #          Priority of the file, i.e. this rule will create the file
 #          '/etc/security/limits.d/<priority>_<label>'
+# @param source  [String]
+#          A source file, which will be copied into place on the local system.
+#          This attribute is mutually exclusive with content and target.
+#          See also
+#          https://docs.puppet.com/puppet/latest/types/file.html#file-attribute-source
+# @param target  [String]
+#          See also
+#          https://docs.puppet.com/puppet/latest/types/file.html#file-attribute-target
 # @param ulimit_domain [String] Default: '*'
 #          ulimit Domain, which can be:
 #                     - an user name
@@ -65,38 +78,50 @@ define ulimit::rule (
     'present',
     'absent'
   ]       $ensure        = 'present',
+  $content               = undef,
   Integer $priority      = 80,
+  $source                = undef,
+  $target                = undef,
   String  $ulimit_domain = '*',
   $ulimit_type           = undef,
   $ulimit_item           = undef,
-  String $ulimit_value   = '',
+  String  $ulimit_value  = '',
 )
 {
   require ::ulimit
   include ::ulimit::config
 
-  if ($ulimit_type == undef or $ulimit_item == undef or empty($ulimit_value)) {
-    fail("${module_name} requires the definition of type, item and/or value")
+  if ($content == undef and $source == undef and $target == undef) {
+    if ($ulimit_type == undef or $ulimit_item == undef or empty($ulimit_value)) {
+      fail("${module_name} requires the definition of type, item and/or value")
+    }
+    if ! $ulimit_type.is_a(String) and (! $ulimit_type.is_a(Array)) {
+      fail("Parameters ulimit_type is expected to be a string or an Array")
+    }
+    if ! $ulimit_item.is_a(String) and ! $ulimit_item.is_a(Array) {
+      fail("Parameters ulimit_item is expected to be a string or an Array")
+    }
   }
-  if ! $ulimit_type.is_a?(String) and ! $ulimit_type.is_a?(Array) {
-    fail("Parameters ulimit_type is expected to be a string or an Array")
-  }
-  if ! $ulimit_item.is_a?(String) and ! $ulimit_item.is_a?(Array) {
-    fail("Parameters ulimit_item is expected to be a string or an Array")
-  }
-
-  $types = $ulimit_type.is_a?(String) {
+  $types = $ulimit_type.is_a(String) ? {
     true    => [ $ulimit_type ],
     default => $ulimit_type,
   }
-  $items = $ulimit_item.is_a?(String) {
+  $items = $ulimit_item.is_a(String) ? {
     true    => [ $ulimit_item ],
     default => $ulimit_item,
+  }
+  $real_content = ($content == undef) ? {
+    true => ($source == undef) ? {
+      true    => template('ulimit/rule.conf.erb'),
+      default => undef,
+    },
+    default => $content,
   }
 
   file { "${::ulimit::config_dir}/${priority}_${name}.conf":
     ensure  => $ensure,
-    content => template ('ulimit/rule.conf.erb'),
+    content => $real_content,
+    source  => $source,
     require => File[$::ulimit::config_dir],
   }
 

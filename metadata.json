@@ -11,7 +11,7 @@
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">=4.2.2 <5.0.0"
-    },
+    }
   ],
   "description": "ulimit",
   "tags": [

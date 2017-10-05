@@ -1,5 +1,5 @@
 ################################################################################
-# Time-stamp: <Thu 2017-10-05 11:37 svarrette>
+# Time-stamp: <Thu 2017-10-05 13:02 svarrette>
 #
 # File::      <tt>params.pp</tt>
 # Author::    Tom De Vylder, Sebastien Varrette
@@ -40,36 +40,36 @@ class ulimit::params {
         # pam package on EL6 creates 90-nproc.conf
         $default_ulimits = {
           'nproc_user_defaults' => {
-            'priority'          => '90',
+            'priority'          => 90,
             'ulimit_domain'     => '*',
-            'ulimit_item'       => ['nproc'],
-            'ulimit_type'       => ['soft'],
-            'ulimit_value'      => ['1024'],
+            'ulimit_item'       => 'nproc',
+            'ulimit_type'       => 'soft',
+            'ulimit_value'      => '1024',
           },
           'nproc_root_defaults' => {
-            'priority'          => '90',
+            'priority'          => 90,
             'ulimit_domain'     => 'root',
-            'ulimit_item'       => ['nproc'],
-            'ulimit_type'       => ['soft'],
-            'ulimit_value'      => ['unlimited'],
+            'ulimit_item'       => 'nproc',
+            'ulimit_type'       => 'soft',
+            'ulimit_value'      => 'unlimited',
           },
         }
       } elsif $::operatingsystemmajrelease == '7' {
         # pam package on EL7 creates 20-nproc.conf
         $default_ulimits = {
           'nproc_user_defaults' => {
-            'priority'          => '20',
+            'priority'          => 20,
             'ulimit_domain'     => '*',
-            'ulimit_item'       => ['nproc'],
-            'ulimit_type'       => ['soft'],
-            'ulimit_value'      => ['4096'],
+            'ulimit_item'       => 'nproc',
+            'ulimit_type'       => 'soft',
+            'ulimit_value'      => '4096',
           },
           'nproc_root_defaults' => {
-            'priority'          => '20',
-            'ulimit_domain'     => ['root'],
-            'ulimit_item'       => ['nproc'],
-            'ulimit_type'       => ['soft'],
-            'ulimit_value'      => ['unlimited'],
+            'priority'          => 20,
+            'ulimit_domain'     => 'root',
+            'ulimit_item'       => 'nproc',
+            'ulimit_type'       => 'soft',
+            'ulimit_value'      => 'unlimited',
           },
         }
       } else {
