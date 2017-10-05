@@ -1,5 +1,5 @@
 ################################################################################
-# Time-stamp: <Thu 2017-10-05 14:54 svarrette>
+# Time-stamp: <Thu 2017-10-05 16:54 svarrette>
 #
 # File::      <tt>rule.pp</tt>
 # Author::    Tom De Vylder, Sebastien Varrette
@@ -74,10 +74,7 @@
 #          Value to set for the domain / type
 #
 define ulimit::rule (
-  Enum[
-    'present',
-    'absent',
-  ] $ensure              = 'present',
+  String $ensure         = 'present',
   $content               = undef,
   Integer $priority      = 80,
   $source                = undef,
@@ -88,6 +85,8 @@ define ulimit::rule (
   String  $ulimit_value  = '',
 )
 {
+  validate_legacy('String', 'validate_re', $ensure, ['^present', '^absent'])
+
   require ::ulimit
   include ::ulimit::config
 
