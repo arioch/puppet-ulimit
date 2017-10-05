@@ -1,5 +1,5 @@
 ################################################################################
-# Time-stamp: <Thu 2017-10-05 16:54 svarrette>
+# Time-stamp: <Thu 2017-10-05 18:26 svarrette>
 #
 # File::      <tt>rule.pp</tt>
 # Author::    Tom De Vylder, Sebastien Varrette
@@ -70,7 +70,7 @@
 #                     - rtprio - max realtime priority
 #                     - chroot - change root to directory (Debian-specific)
 #
-# @param ulimit_value [String]
+# @param ulimit_value [Any]
 #          Value to set for the domain / type
 #
 define ulimit::rule (
@@ -82,7 +82,7 @@ define ulimit::rule (
   String  $ulimit_domain = '*',
   $ulimit_type           = undef,
   $ulimit_item           = undef,
-  String  $ulimit_value  = '',
+  $ulimit_value          = undef,
 )
 {
   validate_legacy('String', 'validate_re', $ensure, ['^present', '^absent'])
@@ -91,7 +91,7 @@ define ulimit::rule (
   include ::ulimit::config
 
   if ($content == undef and $source == undef and $target == undef) {
-    if ($ulimit_type == undef or $ulimit_item == undef or empty($ulimit_value)) {
+    if ($ulimit_type == undef or $ulimit_item == undef or $ulimit_value == undef) {
       fail("${module_name} requires the definition of type, item and/or value")
     }
     if ! $ulimit_type.is_a(String) and (! $ulimit_type.is_a(Array)) {
