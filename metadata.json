@@ -1,9 +1,9 @@
 {
   "name": "svarrette-ulimit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Tom De Vylder, Sebastien Varrette",
   "summary": "Puppet Ulimit module, fork from arioch/puppet-ulimit",
-    "license": "Apache-2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/Falkor/puppet-ulimit",
   "project_page": "http://arioch.github.io/puppet-ulimit/",
   "issues_url": "https://github.com/arioch/puppet-ulimit/issues",
