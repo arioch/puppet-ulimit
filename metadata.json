@@ -5,8 +5,8 @@
   "summary": "Puppet Ulimit module, fork from arioch/puppet-ulimit",
   "license": "Apache-2.0",
   "source": "https://github.com/Falkor/puppet-ulimit",
-  "project_page": "http://arioch.github.io/puppet-ulimit/",
-  "issues_url": "https://github.com/arioch/puppet-ulimit/issues",
+  "project_page": "https://github.com/Falkor/puppet-ulimit",
+  "issues_url": "https://github.com/Falkor/puppet-ulimit/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
