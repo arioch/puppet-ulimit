@@ -6,6 +6,16 @@
 node default {
   include ::ulimit
 
+  # This will create the file '/etc/security/limits.d/80_example1.conf' with the
+  # following content:
+  # *       soft         nofile      1024
+  ::ulimit::rule{ 'example1':
+    ulimit_domain => '*',
+    ulimit_type   => 'soft',
+    ulimit_item   => 'nofile',
+    ulimit_value  => '1024',
+  }
+
   # This will create the file '/etc/security/limits.d/80_slurm.conf' with the
   # following content:
   #
@@ -50,9 +60,9 @@ node default {
   # ... or pass directly the source file -- below statement will create
   # '/etc/security/limits.d/70_source.conf' with that content
   ::ulimit::rule{ 'source':
-    ensure        => 'present',
-    priority      => 70,
-    source        => 'puppet:///modules/ulimit/test.conf',
+    ensure   => 'present',
+    priority => 70,
+    source   => 'puppet:///modules/ulimit/test.conf',
   }
 
 }
