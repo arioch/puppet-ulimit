@@ -1,21 +1,21 @@
 source 'https://rubygems.org'
 
-puppetversion = ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : ['>= 3.8.1']
-gem 'puppet', puppetversion
+gem 'falkorlib' #, :path => '~/git/github.com/Falkor/falkorlib'
 
-if puppetversion =~ /^3/
-  ## rspec-hiera-puppet is puppet 3 only
-  gem 'rspec-hiera-puppet', '>=1.0.0'
+group :test do
+  gem "rake"
+  gem "puppet", ENV['PUPPET_GEM_VERSION'] || '~> 4.10.0'
+  gem 'puppet-strings'
+  gem 'puppetlabs_spec_helper'
+  gem 'metadata-json-lint'
+  gem "puppet-lint-absolute_classname-check"
+  gem "puppet-lint-leading_zero-check"
+  gem "puppet-lint-trailing_comma-check"
+  gem "puppet-lint-version_comparison-check"
+  gem "puppet-lint-classes_and_types_beginning_with_digits-check"
+  gem "puppet-lint-unquoted_string-check"
+  gem 'puppet-lint-resource_reference_syntax'
+  gem 'puppet-syntax'
 end
 
-facterversion = ENV.key?('FACTER_VERSION') ? "~> #{ENV['FACTER_VERSION']}" : ['>= 2.4.4']
-
-gem 'facter', facterversion
-
-gem 'rake'
-gem 'rspec'
-gem 'puppet-lint', '>=1.1.0'
-gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git'
-gem 'puppetlabs_spec_helper', '>=0.10.3'
-gem 'puppet-syntax'
-
+require 'falkorlib/tasks/puppet'

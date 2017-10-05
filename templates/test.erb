@@ -10,8 +10,9 @@
 #
 # <domain> <type> <item> <value>
 #
-<% @types.each do |type| -%>
-<%    @items.each do |item| -%>
-<%= @ulimit_domain.ljust(6) %>  <%= type.ljust(12) %> <%= item.ljust(12) %> <%= @ulimit_value %>
-<%    end -%>
-<% end -%>
+*		hard		memlock		unlimited
+*		soft		memlock		unlimited
+*		hard		nproc		10240
+*		soft		nproc		10240
+*		hard		stack		unlimited
+*		soft		stack		unlimited
