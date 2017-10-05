@@ -1,5 +1,5 @@
 ################################################################################
-# Time-stamp: <Thu 2017-10-05 14:45 svarrette>
+# Time-stamp: <Thu 2017-10-05 14:54 svarrette>
 #
 # File::      <tt>rule.pp</tt>
 # Author::    Tom De Vylder, Sebastien Varrette
@@ -76,8 +76,8 @@
 define ulimit::rule (
   Enum[
     'present',
-    'absent'
-  ]       $ensure        = 'present',
+    'absent',
+  ] $ensure              = 'present',
   $content               = undef,
   Integer $priority      = 80,
   $source                = undef,
@@ -96,10 +96,10 @@ define ulimit::rule (
       fail("${module_name} requires the definition of type, item and/or value")
     }
     if ! $ulimit_type.is_a(String) and (! $ulimit_type.is_a(Array)) {
-      fail("Parameters ulimit_type is expected to be a string or an Array")
+      fail('Parameters ulimit_type is expected to be a string or an Array')
     }
     if ! $ulimit_item.is_a(String) and ! $ulimit_item.is_a(Array) {
-      fail("Parameters ulimit_item is expected to be a string or an Array")
+      fail('Parameters ulimit_item is expected to be a string or an Array')
     }
   }
   $types = $ulimit_type.is_a(String) ? {
