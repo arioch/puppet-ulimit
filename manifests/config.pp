@@ -1,4 +1,15 @@
+################################################################################
+# Time-stamp: <Thu 2017-10-05 11:38 svarrette>
+#
+# File::      <tt>config.pp</tt>
+# Author::    Tom De Vylder, Sebastien Varrette
+# Copyright:: Copyright (c) 2015-2017 arioch,Falkor
+# License::   Apache-2.0
+#
+# ------------------------------------------------------------------------------
 # == Class: ulimit::config
+#
+# This PRIVATE class handles the configuration of ulimit
 #
 class ulimit::config {
   File {
@@ -17,4 +28,3 @@ class ulimit::config {
   }
 
 }
-
