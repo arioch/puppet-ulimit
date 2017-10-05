@@ -1,6 +1,6 @@
 {
   "name": "svarrette-ulimit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Tom De Vylder, Sebastien Varrette",
   "summary": "Puppet Ulimit module, fork from arioch/puppet-ulimit",
   "license": "Apache-2.0",
