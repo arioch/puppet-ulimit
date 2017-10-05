@@ -1,6 +1,6 @@
 {
   "name": "svarrette-ulimit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Tom De Vylder, Sebastien Varrette",
   "summary": "Puppet Ulimit module, fork from arioch/puppet-ulimit to allow a version release compliant with Puppet 4 the time Tom release the official new version on his module",
   "license": "Apache License, Version 2.0",
@@ -21,23 +21,23 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-          "6",
-          "7",
-          "8"
+        "6",
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-          "6",
-          "7"
+        "6",
+        "7"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-          "6",
-          "7"
+        "6",
+        "7"
       ]
     }
   ]
