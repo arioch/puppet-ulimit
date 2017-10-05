@@ -1,6 +1,26 @@
+################################################################################
+# Time-stamp: <Thu 2017-10-05 11:37 svarrette>
+#
+# File::      <tt>params.pp</tt>
+# Author::    Tom De Vylder, Sebastien Varrette
+# Copyright:: Copyright (c) 2015-2017 arioch,Falkor
+# License::   Apache-2.0
+#
+# ------------------------------------------------------------------------------
 # == Class: ulimit::params
 #
+# In this class are defined as default variables values that are used in all
+# other ulimit classes and definitions.
+# This class should be included, where necessary, and eventually be enhanced
+# with support for more Operating Systems.
+#
+#
 class ulimit::params {
+
+  #### MODULE INTERNAL VARIABLES  #########
+  # (Modify to adapt to unsupported OSes)
+  #########################################
+
   $config_dir   = '/etc/security/limits.d'
   $config_group = 'root'
   $config_user  = 'root'
@@ -61,4 +81,3 @@ class ulimit::params {
     }
   }
 }
-
