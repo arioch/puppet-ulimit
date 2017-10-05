@@ -1,9 +1,25 @@
+################################################################################
+# Time-stamp: <Thu 2017-10-05 12:08 svarrette>
+#
+# File::      <tt>rule.pp</tt>
+# Author::    Tom De Vylder, Sebastien Varrette
+# Copyright:: Copyright (c) 2015-2017 arioch,Falkor
+# License::   Apache-2.0
+#
+# ------------------------------------------------------------------------------
 # == Define: ulimit::rule
+#
+# Add a new ulimit rule within /etc/security/limits.d/
 #
 # === Parameters:
 #
-# $ulimit_domain::  Domain
-#                   <domain> can be:
+# @param ensure [String] Default: 'present'.
+#          Ensure the presence (or absence) of the ulimit rule
+# @param priority      [Integer] Default: 80
+#          Priority of the file, i.e. this rule will create the file
+#          '/etc/security/limits.d/<priority>_<label>'
+# @param ulimit_domain [String] Default: '*'
+#          ulimit Domain, which can be:
 #                     - an user name
 #                     - a group name, with @group syntax
 #                     - the wildcard *, for default entry
@@ -13,12 +29,12 @@
 #                       To apply a limit to the root user, <domain> must be
 #                       the literal username root.
 #
-# $ulimit_type::    Type
+# @param ulimit_type   [String or Array]
 #                   <type> can have the two values:
 #                     - "soft" for enforcing the soft limits
 #                     - "hard" for enforcing hard limits
 #
-# $ulimit_item::    Item
+# @param ulimit_item    [String or Array]
 #                   <item> can be one of the following:
 #                     - core - limits the core file size (KB)
 #                     - data - max data size (KB)
@@ -41,48 +57,47 @@
 #                     - rtprio - max realtime priority
 #                     - chroot - change root to directory (Debian-specific)
 #
-# $ulimit_value::   Numerical value
-#
-# $priority::       Default: 80
-#
-# $ensure::         Default: present
+# @param ulimit_value [String]
+#          Value to set for the domain / type
 #
 define ulimit::rule (
-  $ulimit_domain,
-  $ulimit_type = [],
-  $ulimit_item = [],
-  $ulimit_value = [],
-  $priority = 80,
-  $ensure = present,
-) {
+  Enum[
+    'present',
+    'absent'
+  ]       $ensure        = 'present',
+  Integer $priority      = 80,
+  String  $ulimit_domain = '*',
+  $ulimit_type           = undef,
+  $ulimit_item           = undef,
+  String $ulimit_value   = '',
+)
+{
   require ::ulimit
-  if (size($ulimit_type) != size($ulimit_item)) or (size($ulimit_item) != size($ulimit_value)) {
-    fail("Array's are not the same size")
+  include ::ulimit::config
+
+  if ($ulimit_type == undef or $ulimit_item == undef or empty($ulimit_value)) {
+    fail("${module_name} requires the definition of type, item and/or value")
+  }
+  if ! $ulimit_type.is_a?(String) and ! $ulimit_type.is_a?(Array) {
+    fail("Parameters ulimit_type is expected to be a string or an Array")
+  }
+  if ! $ulimit_item.is_a?(String) and ! $ulimit_item.is_a?(Array) {
+    fail("Parameters ulimit_item is expected to be a string or an Array")
   }
 
-  File {
-    group => $::ulimit::config_group,
-    owner => $::ulimit::config_user,
+  $types = $ulimit_type.is_a?(String) {
+    true    => [ $ulimit_type ],
+    default => $ulimit_type,
+  }
+  $items = $ulimit_item.is_a?(String) {
+    true    => [ $ulimit_item ],
+    default => $ulimit_item,
   }
 
-  case $ensure {
-    'present': {
-      file {
-        "${::ulimit::config_dir}/${priority}_${name}.conf":
-          ensure  => $ensure,
-          content => template ('ulimit/rule.conf.erb');
-      }
-    }
-
-    'absent': {
-      file {
-        "${::ulimit::config_dir}/${priority}_${name}.conf":
-          ensure => $ensure;
-      }
-    }
-
-    default: {
-      fail 'No ensure value found for ulimit rule.'
-    }
+  file { "${::ulimit::config_dir}/${priority}_${name}.conf":
+    ensure  => $ensure,
+    content => template ('ulimit/rule.conf.erb'),
+    require => File[$::ulimit::config_dir],
   }
+
 }
