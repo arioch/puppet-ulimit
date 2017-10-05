@@ -8,7 +8,10 @@
   "project_page": "http://arioch.github.io/puppet-ulimit/",
   "issues_url": "https://github.com/arioch/puppet-ulimit/issues",
   "dependencies": [
-
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">=4.2.2 <5.0.0"
+    },
   ],
   "description": "ulimit",
   "tags": [
