@@ -8,7 +8,7 @@ class ulimit::params {
   $purge        = true
 
   # apply default ulimits for OS if found
-  $use_default_ulimits = true
+  $use_default_ulimits = hiera('use_default_ulimits',true)
 
   # ulimit defaults
   case $::operatingsystem {
